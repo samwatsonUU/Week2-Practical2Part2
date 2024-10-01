@@ -39,31 +39,74 @@ static void Main()
 
 }
 
-static void NumberOfWords (string userString)
-{
-
-    string[] userStringWords = userString.Split(" ");
-
-    Console.WriteLine("\nNumber of words: " + userStringWords.Length);
-    Console.WriteLine("Total characters (including spaces): " + userString.Length);
-
-}
-
 static string Encrypt(string plainString)
 {
 
-    int rotations;
+    int rotations = 0;
     char[] chars = plainString.ToCharArray();
-    string encryptedString;
+    string encryptedString = "";
 
     Console.WriteLine("\nHow many rotations would you like to make:");
 
-    rotations = Convert.ToInt32(Console.ReadLine());
+    while (rotations <= 0)
+    {
+
+        rotations = Convert.ToInt32(Console.ReadLine());
+
+        if (rotations <= 0)
+        {
+
+            Console.WriteLine("\nPlease enter a positve value.");
+
+        }
+
+    }
+
+    rotations %= 26;
 
     for (int i = 0; i < chars.Length; i++)
     {
 
-        chars[i] = (char)(chars[i] + rotations);
+        if (chars[i] >= 'A' && chars[i] <= 'Z')
+        {
+
+            if (chars[i] + (rotations) > 'Z')
+            {
+
+                chars[i] = (char)(chars[i] + (rotations) - 26);
+
+
+            }
+            else
+            {
+
+                chars[i] = (char)(chars[i] + rotations); 
+
+            }
+
+
+        }
+        else if (chars[i] >= 'a' && chars[i] <= 'z')
+        {
+
+
+            if (chars[i] + (rotations) > 'z')
+            {
+
+                chars[i] = (char)(chars[i] + (rotations) - 26);
+
+            }
+            else
+            {
+
+                chars[i] = (char)(chars[i] + rotations); 
+
+            }
+
+
+        }
+
+        
 
     }
 
@@ -79,18 +122,68 @@ static string Encrypt(string plainString)
 static string Decrypt(string encryptedString)
 {
 
-    int rotations;
+    int rotations = 0;
     char[] chars = encryptedString.ToCharArray();
     string originalString;
 
     Console.WriteLine("\nHow many rotations have been performed on this string:");
 
-    rotations = Convert.ToInt32(Console.ReadLine());
+    while (rotations <= 0)
+    {
+
+        rotations = Convert.ToInt32(Console.ReadLine());
+
+        if (rotations <= 0)
+        {
+
+            Console.WriteLine("\nPlease enter a positve value.");
+
+        }
+
+    }
+
+    rotations %= 26;
 
     for (int i = 0; i < chars.Length; i++)
     {
 
-        chars[i] = (char)(chars[i] - rotations);
+        if (chars[i] >= 'A' && chars[i] <= 'Z')
+        {
+
+            if (chars[i] - (rotations) < 'A')
+            {
+
+                Console.WriteLine(rotations);
+                chars[i] = (char)(chars[i] - (rotations) + 26);
+
+
+            }
+            else
+            {
+
+                chars[i] = (char)(chars[i] - rotations);
+
+            }
+
+
+        } else if (chars[i] >= 'a' && chars[i] <= 'z')
+        {
+
+            if (chars[i] - (rotations) < 'a')
+            {
+
+                chars[i] = (char)(chars[i] - (rotations) + 26);
+
+
+            }
+            else
+            {
+
+                chars[i] = (char)(chars[i] - rotations);
+
+            }
+
+        }
 
     }
 
@@ -150,3 +243,5 @@ static int Menu()
 
 
 }
+
+
